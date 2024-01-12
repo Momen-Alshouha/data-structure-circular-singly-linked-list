@@ -16,5 +16,5 @@ int main()
 	cout << list.FindParent(21) << endl;
 	cout << boolalpha << list.IsExisit(100) << endl;
 	cout << boolalpha << list.IsExisit(5) << endl;
-		
+	cout << list.FindByIndex(121) << endl;
 }

@@ -84,15 +84,18 @@ public:
 		
 		if (_head != nullptr)
 		{
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			if (index<_length)
 			{
-				if (counter == index)
+				for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
 				{
-					return itr.current_node;
+					if (counter == index)
+					{
+						return itr.current_node;
+					}
 				}
 			}
 		}
-		return nullptr;
+
 	}
 
 	Node<T>* FindParent(T DataToFind) {
