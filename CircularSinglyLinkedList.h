@@ -309,6 +309,28 @@ public:
 
 	}
 
+	void Concat(CircularSinglyLinkedList<T> &otherList) {
+		
+		if (_head==nullptr)
+		{
+
+			_head = otherList.head;
+			_tail = otherList.tail;
+			_length = otherList.length;
+
+		}
+		else if (otherList.head != nullptr) {
+			
+			_tail->next = otherList.head;
+			otherList.tail->next = _head;
+			_tail = otherList.tail;
+			_length += otherList.length;
+
+			otherList._head = nullptr;
+			otherList._tail = nullptr;
+			otherList._length = 0;
+		}
+	}
 
 	void Reverse() {
 	
