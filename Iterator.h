@@ -29,7 +29,7 @@ public:
 
 	// != operator overloading for the purpose of using this inside linked list class
 	bool operator!=(const Iterator& other) const {
-		return _currentNode != other._CurrentNode;
+		return _currentNode != other._currentNode;
 	}
 
 	// proprties

@@ -3,5 +3,6 @@
 
 int main()
 {
- 
+	CircularSinglyLinkedList<> list;
+	
 }
