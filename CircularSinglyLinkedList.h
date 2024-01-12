@@ -310,6 +310,26 @@ public:
 	}
 
 
+	void Reverse() {
+	
+		CircularSinglyLinkedList<T> newLinkedList;
+
+		for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+		{
+			newLinkedList.InsertLast(itr.current_node->data);
+		}
+
+
+		Clear();
+
+		for (Iterator<T> itr = newLinkedList._begin(); itr != newLinkedList._end(); itr.current_node = itr.Next())
+		{
+			(*this).InsertBegin(itr.current_node->data);
+		}
+
+	}
+
+
 	void Clear() {
 		while (_head!=nullptr)
 		{
