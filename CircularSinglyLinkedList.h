@@ -9,6 +9,7 @@ class CircularSinglyLinkedList
 {
 	Node<T>* _head;
 	Node<T>* _tail;
+	short _length = 0;
 
 	Iterator<T> _begin() {
 		return Iterator<T>(_head);
@@ -18,10 +19,79 @@ class CircularSinglyLinkedList
 		return Iterator<T>(nullptr);
 	}
 
+
+
 public:
 
 	CircularSinglyLinkedList();
 	~CircularSinglyLinkedList();
+
+	short GetLength() {
+		short length = 0;
+		if (_head!=nullptr)
+		{
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.Next())
+			{
+				length++;
+			}
+		}
+		return length;
+	}
+
+	Node<T>* GetHead() {
+		return _head;
+	}
+
+	void SetHead(Node<T>* NewHead) {
+		_head = NewHead;
+	}
+
+	Node<T>* GetTail() {
+		return _tail;
+	}
+
+	void SetTail(Node<T>* NewTail) {
+		_tail = NewTail;
+	}
+
+	// proprties
+	__declspec(property(get = GetLength)) short length; // read only 
+	__declspec(property(get = GetHead, put = SetHead)) Node<T>* head;
+	__declspec(property(get = GetTail, put = SetTail)) Node<T>* tail;
+
+
+	void InsertBegin(T DataToInsert) {
+		Node<T>* NewNode = new (nothrow) Node<T>(DataToInsert);
+
+		if (_head == nullptr) {
+			_head = _tail = NewNode;
+		}
+		else {
+			NewNode->next = _head;
+			_head = NewNode;
+			_tail->next = _head; 
+		}
+		_length++;
+	}
+
+
+	void Print() {
+		if (_head!=nullptr)
+		{
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.Next())
+			{
+				cout << itr.current_node->data;
+				if (itr.current_node!=_tail)
+				{
+					cout << " -> ";
+				}
+				if (itr.current_node==_tail)
+				{
+					break;
+				}
+			}
+		}
+	}
 
 };
 
@@ -30,13 +100,17 @@ template <typename T>
 CircularSinglyLinkedList<T>::CircularSinglyLinkedList() : _head(nullptr), _tail(nullptr) {};
 
 template <typename T>
-CircularSinglyLinkedList<T>::~CircularSinglyLinkedList() // destructor to free memory
-{
-	Iterator<T> itr = _begin();
+CircularSinglyLinkedList<T>::~CircularSinglyLinkedList() {
+	
+	Node<T>* current = _head;
 
-	while (itr != _end()) {
-		Node<T>* current = itr.current_node;
-		itr.Next();
+	while (current!=nullptr)
+	{
+		Node<T>* next = current->next;
 		delete current;
+		current = (next == _head) ? nullptr : next; // for the purpose of not to go through infinite loop
 	}
+	_head = nullptr;
+	_tail = nullptr;
+	_length = 0;
 }
