@@ -226,6 +226,97 @@ public:
 		}
 	}
 
+
+	void DeleteFront() {
+		
+		if (_head != nullptr) {
+		
+			_head = _head->next;
+
+			if (_head == nullptr) {
+				_tail = nullptr;
+			}
+			else {
+				_tail->next = _head;
+			}
+			
+			_length--;
+		}
+	}
+
+
+	void DeleteBack() {
+
+		if (_head != nullptr) {
+			if (_tail == _head) {
+				delete _head;
+				_head = _tail = nullptr;
+				_length = 0;
+			}
+			else {
+				Node<T>* tailParent = FindParent(_tail->data);
+				delete _tail;
+				_tail = tailParent;
+				_tail->next = _head;
+				_length--;
+			}
+		}
+
+	}
+
+	void DeleteAtIndex(short index) {
+		
+		if (_head!=nullptr && index>=0 && index<_length)
+		{
+			if (index==0)
+			{
+				DeleteFront();
+			}
+			else if (index==_length-1) {
+				DeleteBack();
+			}
+			else {
+
+				Node<T>* NodeParent = FindByIndex(index - 1);
+
+				if (NodeParent!=nullptr)
+				{
+					NodeParent->next = NodeParent->next->next;
+					_length--;
+				}
+			}
+		}
+
+	}
+
+	void DeleteAllNodesWithSpecificValue(T value) {
+		
+		CircularSinglyLinkedList<T> newLinkedList;
+
+		for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
+			if (itr.current_node->data != value) {
+				newLinkedList.InsertLast(itr.current_node->data);
+			}
+		}
+
+		Clear(); // clear linked list current instance
+
+
+		// Copy the elements from the new linked list to the current instance
+		for (Iterator<T> itr = newLinkedList._begin(); itr != newLinkedList._end(); itr.current_node = itr.Next()) {
+			(*this).InsertLast(itr.current_node->data);
+		}
+
+	}
+
+
+	void Clear() {
+		while (_head!=nullptr)
+		{
+			DeleteBack();
+		}
+	}
+
 	void Print() {
 		if (_head != nullptr) {
 			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
@@ -247,16 +338,7 @@ CircularSinglyLinkedList<T>::CircularSinglyLinkedList() : _head(nullptr), _tail(
 
 template <typename T>
 CircularSinglyLinkedList<T>::~CircularSinglyLinkedList() {
-	
-	Node<T>* current = _head;
-
-	while (current!=nullptr)
-	{
-		Node<T>* next = current->next;
-		delete current;
-		current = (next == _head) ? nullptr : next; // for the purpose of not to go through infinite loop
+	while (_head != nullptr) {
+		DeleteBack();
 	}
-	_head = nullptr;
-	_tail = nullptr;
-	_length = 0;
 }
