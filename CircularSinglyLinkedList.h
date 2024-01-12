@@ -19,7 +19,24 @@ class CircularSinglyLinkedList
 		return Iterator<T>(nullptr);
 	}
 
+	short _GetNodeIndex(T Data) {
 
+		short index = 0; 
+
+		if (_head != nullptr)
+		{
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			{
+				if (itr.current_node->data == Data)
+				{
+					return index;
+				}
+				index++;
+			}
+		}
+
+		return -1;// -1 means that node not exisit
+	}
 
 public:
 
@@ -92,6 +109,7 @@ public:
 					{
 						return itr.current_node;
 					}
+					counter++;
 				}
 			}
 		}
@@ -158,7 +176,55 @@ public:
 		_length++;
 	}
 
+	void InsertAtIndex(short index,T DataToInsert) {
+		if (index<=length)
+		{
+			if (index==0)
+			{
+				InsertBegin(DataToInsert);
+			}
+			else if (index==length) {
+				InsertLast(DataToInsert);
+			}
+			else {
+				Node<T>* Temp = FindByIndex(index);
+				Node<T>* ParentAtIndex = FindParent(Temp->data);
+				Node<T>* NewNode = new Node<T>(DataToInsert);
+				NewNode->next = ParentAtIndex->next;
+				ParentAtIndex->next = NewNode;
+				_length++;
+			}
+		}
+	}
 
+	void InsertBefore(T DataToInsertBefore,T NewData) {
+		if (_head!=nullptr)
+		{
+			short index = _GetNodeIndex(DataToInsertBefore);
+
+			if (index==0)
+			{
+				InsertBegin(NewData);
+			}
+			else {
+				InsertAtIndex(index, NewData);
+			}
+		}
+	}
+
+	void InsertAfter(T DataToInsertAfter , T NewData) {
+		if (_head!=nullptr)
+		{
+			short index = _GetNodeIndex(DataToInsertAfter);
+			if (index==length-1)
+			{
+				InsertLast(NewData);
+			}
+			else {
+				InsertAtIndex(index + 1,NewData);
+			}
+		}
+	}
 
 	void Print() {
 		if (_head != nullptr) {

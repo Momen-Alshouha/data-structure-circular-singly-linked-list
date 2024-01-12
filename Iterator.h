@@ -47,6 +47,6 @@ public:
 
 	// proprties
 	__declspec(property(get = GetData, put = SetData)) T data;
-	__declspec(property(get = GetCurrentNode , put=SetCurrentNode)) Node<T>* current_node;
+	__declspec(property(get = GetCurrentNode , put=SetCurrentNode)) Node<T>* current_node; 
 
 };

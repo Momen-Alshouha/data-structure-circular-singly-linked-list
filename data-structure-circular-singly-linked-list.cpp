@@ -11,10 +11,14 @@ int main()
 	list.InsertLast(5);
 	list.Print();
 	cout << list.length << endl;
+	cout << list.FindByIndex(1) << endl;;
+	cout << list.FindByIndex(0) << endl;;
+	list.InsertAtIndex(0, 19);
+	list.InsertAtIndex(1, 199);
+	list.InsertBefore(19, 777);
+	list.InsertAfter(19, 22);
+	list.InsertAfter(5, 444);
+	list.Print();
 	cout << list.tail->next->data << endl;
-	cout << list.Find(2) << endl;
-	cout << list.FindParent(21) << endl;
-	cout << boolalpha << list.IsExisit(100) << endl;
-	cout << boolalpha << list.IsExisit(5) << endl;
-	cout << list.FindByIndex(121) << endl;
+	cout << list.head->data << endl;
 }
