@@ -32,6 +32,11 @@ public:
 		{
 			for (Iterator<T> itr = _begin(); itr != _end(); itr.Next())
 			{
+				if (itr.current_node == _head && length>0) // to avoid going through infinite loop
+				{
+					break;
+				}
+
 				length++;
 			}
 		}
@@ -59,8 +64,68 @@ public:
 	__declspec(property(get = GetHead, put = SetHead)) Node<T>* head;
 	__declspec(property(get = GetTail, put = SetTail)) Node<T>* tail;
 
+	Node<T>* Find(T DataToFind) {
+		if (_head!=nullptr)
+		{
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			{
+				if (itr.current_node->data==DataToFind)
+				{
+					return itr.current_node;
+				}
+			}
+			return nullptr;
+		}
+	}
+
+	Node<T>* FindByIndex(short index) {
+		
+		short counter = 0;
+		
+		if (_head != nullptr)
+		{
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			{
+				if (counter == index)
+				{
+					return itr.current_node;
+				}
+			}
+		}
+		return nullptr;
+	}
+
+	Node<T>* FindParent(T DataToFind) {
+		
+		if (_head != nullptr)
+		{
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			{
+				if (itr.current_node->next->data == DataToFind)
+				{
+					return itr.current_node;
+				}
+			}
+			return nullptr;
+		}
+	}
+
+	bool IsExisit(T DataToCheck) {
+		
+		if (_head!=nullptr)
+		{
+			Node<T>* Temp = Find(DataToCheck); // reuse Find 
+			if (Temp!=nullptr)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	void InsertBegin(T DataToInsert) {
+		
 		Node<T>* NewNode = new (nothrow) Node<T>(DataToInsert);
 
 		if (_head == nullptr) {
@@ -74,24 +139,36 @@ public:
 		_length++;
 	}
 
+	void InsertLast(T DataToInsert) {
+		
+		Node<T>* NewNode = new Node<T>(DataToInsert);
+
+		if (_head==nullptr)
+		{
+			_head = _tail = NewNode;
+		}
+		else {
+			NewNode->next = _head;
+			_tail->next = NewNode;
+			_tail = NewNode;
+		}
+		_length++;
+	}
+
+
 
 	void Print() {
-		if (_head!=nullptr)
-		{
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.Next())
-			{
+		if (_head != nullptr) {
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
 				cout << itr.current_node->data;
-				if (itr.current_node!=_tail)
-				{
+				if (itr.current_node != _tail) {
 					cout << " -> ";
 				}
-				if (itr.current_node==_tail)
-				{
-					break;
-				}
 			}
+			cout << endl;
 		}
 	}
+
 
 };
 
