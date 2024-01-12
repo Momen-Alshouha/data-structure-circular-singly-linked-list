@@ -130,6 +130,7 @@
     <ClCompile Include="data-structure-circular-singly-linked-list.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CircularSinglyLinkedList.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="Node.h" />
   </ItemGroup>
