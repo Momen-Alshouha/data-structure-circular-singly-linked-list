@@ -309,6 +309,28 @@ public:
 
 	}
 
+	void Swap(T Data1 , T Data2) {
+		
+		if (_head!=nullptr)
+		{
+			Node<T>* Node1 = Find(Data1);
+			Node<T>* Node2 = Find(Data2);
+			if (Node1 ==nullptr || Node2==nullptr )
+			{
+				return;
+			}
+			T tempData = Node1->data;
+			Node1->data = Node2->data;
+			Node2->data = tempData;
+		}
+
+	}
+
+	void Update(T OldValue, T NewValue) {
+		Node<T>* NodeToUpdate = Find(OldValue);
+		NodeToUpdate->data = NewValue;
+	}
+
 	void Concat(CircularSinglyLinkedList<T> &otherList) {
 		
 		if (_head==nullptr)
