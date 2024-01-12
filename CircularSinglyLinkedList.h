@@ -2,6 +2,7 @@
 #include "Node.h"
 #include "Iterator.h"
 #include <iostream>
+
 using namespace std;
 
 template<typename T = int> // int is default template argument 
@@ -306,6 +307,27 @@ public:
 		for (Iterator<T> itr = newLinkedList._begin(); itr != newLinkedList._end(); itr.current_node = itr.Next()) {
 			(*this).InsertLast(itr.current_node->data);
 		}
+
+	}
+
+	void SplitAtValue(T SplitValue, CircularSinglyLinkedList<T> &SecondList) {
+		
+		Node<T>* SplitNode = Find(SplitValue);
+
+		if (_head==nullptr || SplitNode ==nullptr)
+		{
+			return;
+		}
+
+		SecondList.head = SplitNode->next;
+		SecondList.tail = _tail;
+		SecondList.tail->next = nullptr;
+
+		_tail = SplitNode;
+		_tail->next = nullptr;
+
+		SecondList._length = SecondList.GetLength();
+		_length -= SecondList.length;
 
 	}
 

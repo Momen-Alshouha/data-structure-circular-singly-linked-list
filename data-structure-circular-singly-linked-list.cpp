@@ -3,28 +3,22 @@
 
 int main()
 {
-	CircularSinglyLinkedList<> list,list2;
+	CircularSinglyLinkedList<> list, list2, list3;
 	
 	list.InsertLast(1);
 	list.InsertLast(2);	
 	list.InsertLast(3);
 	list.InsertLast(4);
+	list.InsertLast(5);
+	list.InsertLast(6);
+	list.InsertLast(7);
+	list.InsertLast(8);
 
-
-	list2.InsertLast(5);
-	list2.InsertLast(6);
-	list2.InsertLast(7);
-	list2.InsertLast(8);
-
-	list.Concat(list2);
-
+	cout << "\n--------------------------------\n";
 	list.Print();
-	cout << list.length << endl;
-	cout << list.tail->next->data << endl;
-	list.Update(1, 99);
+	list.SplitAtValue(5, list3);
 	list.Print();
-	list.Swap(99, 8);
-	list.Swap(6, 8);
-	list.Print();
+	list3.Print();
+	
 
 }
