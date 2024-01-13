@@ -8,16 +8,18 @@ using namespace std;
 template<typename T = int> // int is default template argument 
 class CircularSinglyLinkedList
 {
+	using iterator = Iterator<T>;
+
 	Node<T>* _head;
 	Node<T>* _tail;
 	short _length = 0;
 
-	Iterator<T> _begin() {
-		return Iterator<T>(_head);
+	iterator _begin() {
+		return iterator(_head);
 	}
 
-	Iterator<T> _end() {
-		return Iterator<T>(nullptr);
+	iterator _end() {
+		return iterator(nullptr);
 	}
 
 	short _GetNodeIndex(T Data) {
@@ -26,7 +28,7 @@ class CircularSinglyLinkedList
 
 		if (_head != nullptr)
 		{
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next())
 			{
 				if (itr.current_node->data == Data)
 				{
@@ -48,7 +50,7 @@ public:
 		short length = 0;
 		if (_head!=nullptr)
 		{
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.Next())
+			for (iterator itr = _begin(); itr != _end(); itr.Next())
 			{
 				if (itr.current_node == _head && length>0) // to avoid going through infinite loop
 				{
@@ -85,7 +87,7 @@ public:
 	Node<T>* Find(T DataToFind) {
 		if (_head!=nullptr)
 		{
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next())
 			{
 				if (itr.current_node->data==DataToFind)
 				{
@@ -104,7 +106,7 @@ public:
 		{
 			if (index<_length)
 			{
-				for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+				for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next())
 				{
 					if (counter == index)
 					{
@@ -121,7 +123,7 @@ public:
 		
 		if (_head != nullptr)
 		{
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next())
 			{
 				if (itr.current_node->next->data == DataToFind)
 				{
@@ -294,7 +296,7 @@ public:
 		
 		CircularSinglyLinkedList<T> newLinkedList;
 
-		for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
+		for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
 			if (itr.current_node->data != value) {
 				newLinkedList.InsertLast(itr.current_node->data);
 			}
@@ -304,7 +306,7 @@ public:
 
 
 		// Copy the elements from the new linked list to the current instance
-		for (Iterator<T> itr = newLinkedList._begin(); itr != newLinkedList._end(); itr.current_node = itr.Next()) {
+		for (iterator itr = newLinkedList._begin(); itr != newLinkedList._end(); itr.current_node = itr.Next()) {
 			(*this).InsertLast(itr.current_node->data);
 		}
 
@@ -342,7 +344,7 @@ public:
 		do {
 			swapped = false;
 
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
+			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
 				if (itr.current_node->next != nullptr && (itr.current_node->data > itr.current_node->next->data ) && itr.current_node->next!=_head) {
 					Swap(itr.current_node->data, itr.current_node->next->data);
 					swapped = true;
@@ -363,7 +365,7 @@ public:
 		{
 			CircularSinglyLinkedList<T> uniqueList;
 
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next())
 			{
 				if (!uniqueList.IsExisit(itr.current_node->data))
 				{
@@ -372,7 +374,7 @@ public:
 			}
 			Clear();
 
-			for (Iterator<T> itr = uniqueList._begin(); itr != _end(); itr.current_node = itr.Next())
+			for (iterator itr = uniqueList._begin(); itr != _end(); itr.current_node = itr.Next())
 			{
 				(*this).InsertLast(itr.current_node->data);
 			}
@@ -427,7 +429,7 @@ public:
 	
 		CircularSinglyLinkedList<T> newLinkedList;
 
-		for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+		for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next())
 		{
 			newLinkedList.InsertLast(itr.current_node->data);
 		}
@@ -435,7 +437,7 @@ public:
 
 		Clear();
 
-		for (Iterator<T> itr = newLinkedList._begin(); itr != newLinkedList._end(); itr.current_node = itr.Next())
+		for (iterator itr = newLinkedList._begin(); itr != newLinkedList._end(); itr.current_node = itr.Next())
 		{
 			(*this).InsertBegin(itr.current_node->data);
 		}
@@ -452,7 +454,7 @@ public:
 
 	void Print() {
 		if (_head != nullptr) {
-			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
+			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
 				cout << itr.current_node->data;
 				if (itr.current_node != _tail) {
 					cout << " -> ";
