@@ -352,6 +352,12 @@ public:
 		} while (swapped);
 	}
 
+	void BubbleSortDesc() {
+		BubbleSortAsc();
+		Reverse();
+	}
+
+
 	void Swap(T Data1 , T Data2) {
 		
 		if (_head!=nullptr)

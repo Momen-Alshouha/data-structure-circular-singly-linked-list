@@ -16,7 +16,7 @@ int main()
 	list.InsertLast(99);
 	list.InsertLast(10);
 	list.Print();
-	list.BubbleSortAsc();
+	list.BubbleSortDesc();
 	list.Print();
 	
 
