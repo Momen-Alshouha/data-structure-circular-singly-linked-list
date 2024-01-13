@@ -357,6 +357,27 @@ public:
 		Reverse();
 	}
 
+	void RemoveDuplicates() {
+		
+		if (_head!=nullptr && _head!=_tail)
+		{
+			CircularSinglyLinkedList<T> uniqueList;
+
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next())
+			{
+				if (!uniqueList.IsExisit(itr.current_node->data))
+				{
+					uniqueList.InsertLast(itr.current_node->data);
+				}
+			}
+			Clear();
+
+			for (Iterator<T> itr = uniqueList._begin(); itr != _end(); itr.current_node = itr.Next())
+			{
+				(*this).InsertLast(itr.current_node->data);
+			}
+		}
+	}
 
 	void Swap(T Data1 , T Data2) {
 		

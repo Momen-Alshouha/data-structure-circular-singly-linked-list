@@ -6,6 +6,8 @@ int main()
 	CircularSinglyLinkedList<> list;
 	
 	list.InsertLast(4);
+	list.InsertLast(4);
+	list.InsertLast(4);
 	list.InsertLast(2);	
 	list.InsertLast(3);
 	list.InsertLast(9);
@@ -18,6 +20,7 @@ int main()
 	list.Print();
 	list.BubbleSortDesc();
 	list.Print();
-	
+	list.RemoveDuplicates();
+	list.Print();
 
 }
