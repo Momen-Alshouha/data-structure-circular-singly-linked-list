@@ -331,6 +331,27 @@ public:
 
 	}
 
+	void BubbleSortAsc() {
+		
+		if (_head == nullptr || _head == _tail) {
+			return;
+		}
+
+		bool swapped = false;
+
+		do {
+			swapped = false;
+
+			for (Iterator<T> itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
+				if (itr.current_node->next != nullptr && (itr.current_node->data > itr.current_node->next->data ) && itr.current_node->next!=_head) {
+					Swap(itr.current_node->data, itr.current_node->next->data);
+					swapped = true;
+				}
+			}
+
+		} while (swapped);
+	}
+
 	void Swap(T Data1 , T Data2) {
 		
 		if (_head!=nullptr)
@@ -345,7 +366,6 @@ public:
 			Node1->data = Node2->data;
 			Node2->data = tempData;
 		}
-
 	}
 
 	void Update(T OldValue, T NewValue) {
