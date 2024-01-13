@@ -9,9 +9,10 @@ template<typename T = int> // int is default template argument
 class CircularSinglyLinkedList
 {
 	using iterator = Iterator<T>;
+	using node = Node<T>*; // using node keyword to define pointer to node instance
 
-	Node<T>* _head;
-	Node<T>* _tail;
+	node _head;
+	node _tail;
 	short _length = 0;
 
 	iterator _begin() {
@@ -63,28 +64,28 @@ public:
 		return length;
 	}
 
-	Node<T>* GetHead() {
+	node GetHead() {
 		return _head;
 	}
 
-	void SetHead(Node<T>* NewHead) {
+	void SetHead(node NewHead) {
 		_head = NewHead;
 	}
 
-	Node<T>* GetTail() {
+	node GetTail() {
 		return _tail;
 	}
 
-	void SetTail(Node<T>* NewTail) {
+	void SetTail(node NewTail) {
 		_tail = NewTail;
 	}
 
 	// proprties
 	__declspec(property(get = GetLength)) short length; // read only 
-	__declspec(property(get = GetHead, put = SetHead)) Node<T>* head;
-	__declspec(property(get = GetTail, put = SetTail)) Node<T>* tail;
+	__declspec(property(get = GetHead, put = SetHead)) node head;
+	__declspec(property(get = GetTail, put = SetTail)) node tail;
 
-	Node<T>* Find(T DataToFind) {
+	node Find(T DataToFind) {
 		if (_head!=nullptr)
 		{
 			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next())
@@ -98,7 +99,7 @@ public:
 		}
 	}
 
-	Node<T>* FindByIndex(short index) {
+	node FindByIndex(short index) {
 		
 		short counter = 0;
 		
@@ -119,7 +120,7 @@ public:
 
 	}
 
-	Node<T>* FindParent(T DataToFind) {
+	node FindParent(T DataToFind) {
 		
 		if (_head != nullptr)
 		{
@@ -138,7 +139,7 @@ public:
 		
 		if (_head!=nullptr)
 		{
-			Node<T>* Temp = Find(DataToCheck); // reuse Find 
+			node Temp = Find(DataToCheck); // reuse Find 
 			if (Temp!=nullptr)
 			{
 				return true;
@@ -150,7 +151,7 @@ public:
 
 	void InsertBegin(T DataToInsert) {
 		
-		Node<T>* NewNode = new (nothrow) Node<T>(DataToInsert);
+		node NewNode = new (nothrow) Node<T>(DataToInsert);
 
 		if (_head == nullptr) {
 			_head = _tail = NewNode;
@@ -165,7 +166,7 @@ public:
 
 	void InsertLast(T DataToInsert) {
 		
-		Node<T>* NewNode = new Node<T>(DataToInsert);
+		node NewNode = new Node<T>(DataToInsert);
 
 		if (_head==nullptr)
 		{
@@ -190,9 +191,9 @@ public:
 				InsertLast(DataToInsert);
 			}
 			else {
-				Node<T>* Temp = FindByIndex(index);
-				Node<T>* ParentAtIndex = FindParent(Temp->data);
-				Node<T>* NewNode = new Node<T>(DataToInsert);
+				node Temp = FindByIndex(index);
+				node ParentAtIndex = FindParent(Temp->data);
+				node NewNode = new Node<T>(DataToInsert);
 				NewNode->next = ParentAtIndex->next;
 				ParentAtIndex->next = NewNode;
 				_length++;
@@ -257,7 +258,7 @@ public:
 				_length = 0;
 			}
 			else {
-				Node<T>* tailParent = FindParent(_tail->data);
+				node tailParent = FindParent(_tail->data);
 				delete _tail;
 				_tail = tailParent;
 				_tail->next = _head;
@@ -280,7 +281,7 @@ public:
 			}
 			else {
 
-				Node<T>* NodeParent = FindByIndex(index - 1);
+				node NodeParent = FindByIndex(index - 1);
 
 				if (NodeParent!=nullptr)
 				{
@@ -314,7 +315,7 @@ public:
 
 	void SplitAtValue(T SplitValue, CircularSinglyLinkedList<T> &SecondList) {
 		
-		Node<T>* SplitNode = Find(SplitValue);
+		node SplitNode = Find(SplitValue);
 
 		if (_head==nullptr || SplitNode ==nullptr)
 		{
@@ -385,8 +386,8 @@ public:
 		
 		if (_head!=nullptr)
 		{
-			Node<T>* Node1 = Find(Data1);
-			Node<T>* Node2 = Find(Data2);
+			node Node1 = Find(Data1);
+			node Node2 = Find(Data2);
 			if (Node1 ==nullptr || Node2==nullptr )
 			{
 				return;
@@ -398,7 +399,7 @@ public:
 	}
 
 	void Update(T OldValue, T NewValue) {
-		Node<T>* NodeToUpdate = Find(OldValue);
+		node NodeToUpdate = Find(OldValue);
 		NodeToUpdate->data = NewValue;
 	}
 
@@ -454,7 +455,7 @@ public:
 
 	void Print() {
 		if (_head != nullptr) {
-			for (iterator itr = _begin(); itr != _end(); itr.current_node = itr.Next()) {
+			for (iterator itr = _begin(); itr != _end(); itr.current_node =itr.Next()) {
 				cout << itr.current_node->data;
 				if (itr.current_node != _tail) {
 					cout << " -> ";
